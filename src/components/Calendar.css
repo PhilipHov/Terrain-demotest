@@ -1,4 +1,3 @@
-
 .calendar {
   background: white;
   border-radius: 3px;
@@ -75,7 +74,7 @@
 }
 
 .calendar-day.booked {
-  background: #ffebee;
+  background: #f5f0f0;
 }
 
 .day-number {
@@ -84,7 +83,7 @@
 }
 
 .booking-label {
-  background: #f44336;
+  background: #c57c7c;
   color: white;
   font-size: 0.5rem;
   padding: 1px;

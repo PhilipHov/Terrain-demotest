@@ -72,7 +72,7 @@
 
 .search-btn {
   padding: 0.4rem;
-  background: #4caf50;
+  background: #6b9c6e;
   border: none;
   color: white;
   font-size: 0.8rem;
@@ -82,12 +82,12 @@
 }
 
 .search-btn:hover {
-  background: #45a047;
+  background: #5a8a5d;
 }
 
 .clear-btn {
   padding: 0.4rem;
-  background: #f44336;
+  background: #c57c7c;
   border: none;
   color: white;
   font-size: 0.8rem;
@@ -97,7 +97,7 @@
 }
 
 .clear-btn:hover {
-  background: #d32f2f;
+  background: #b06969;
 }
 
 .directive-btn {
