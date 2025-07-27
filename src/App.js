@@ -66,6 +66,16 @@ export default function App() {
   const [bookingData, setBookingData] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
 
+  const handleClear = () => {
+    setSelectedCity(null);
+    setCityGeoJson(null);
+    setSelectedDates([]);
+    setModalOpen(false);
+    setSelectedFacility(null);
+    setReceiptOpen(false);
+    setBookingData(null);
+  };
+
   const facilityData = {
     'Indgang Øst': {
       name: 'Indgang Øst',
@@ -136,7 +146,7 @@ export default function App() {
 
   return (
     <div className="App-layout">
-      <Sidebar onLocationSearch={handleLocationSearch} onDatesSelected={setSelectedDates} />
+      <Sidebar onLocationSearch={handleLocationSearch} onDatesSelected={setSelectedDates} onClear={handleClear} />
 
       <MapContainer
         className="map-container"

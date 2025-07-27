@@ -85,6 +85,21 @@
   background: #45a047;
 }
 
+.clear-btn {
+  padding: 0.4rem;
+  background: #f44336;
+  border: none;
+  color: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.3rem;
+}
+
+.clear-btn:hover {
+  background: #d32f2f;
+}
+
 .directive-btn {
   width: 100%;
   padding: 0.25rem 0.3rem;

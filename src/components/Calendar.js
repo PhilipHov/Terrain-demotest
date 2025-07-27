@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './Calendar.css';
 
-const Calendar = ({ onDatesSelected }) => {
+const Calendar = ({ onDatesSelected, resetDates }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState([]);
+
+  // Reset dates when resetDates prop changes
+  useEffect(() => {
+    if (resetDates) {
+      setSelectedDates([]);
+    }
+  }, [resetDates]);
 
   const monthNames = [
     'januar', 'februar', 'marts', 'april', 'maj', 'juni',

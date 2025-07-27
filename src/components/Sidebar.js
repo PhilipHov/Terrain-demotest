@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import Calendar from './Calendar';
 import './Sidebar.css';
 
-const Sidebar = ({ onLocationSearch, onDatesSelected }) => {
+const Sidebar = ({ onLocationSearch, onDatesSelected, onClear }) => {
   const [type, setType] = useState(null); // 'skydebane' or 'øvelsesterræn'
   const [selectedLocation, setSelectedLocation] = useState('');
+
+  const handleClear = () => {
+    setType(null);
+    setSelectedLocation('');
+    if (onDatesSelected) onDatesSelected([]);
+    if (onClear) onClear();
+  };
 
   return (
     <aside className="sidebar">
@@ -44,7 +51,7 @@ const Sidebar = ({ onLocationSearch, onDatesSelected }) => {
       </section>
 
       <section className="filter-group">
-        <Calendar onDatesSelected={onDatesSelected} />
+        <Calendar onDatesSelected={onDatesSelected} resetDates={selectedDates.length === 0} />
       </section>
 
       <button 
@@ -80,6 +87,13 @@ const Sidebar = ({ onLocationSearch, onDatesSelected }) => {
         onClick={() => onLocationSearch && onLocationSearch(selectedLocation)}
       >
         SØG
+      </button>
+      
+      <button 
+        className="clear-btn" 
+        onClick={handleClear}
+      >
+        CLEAR
       </button>
     </aside>
   );
