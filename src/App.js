@@ -59,6 +59,15 @@ export default function App() {
   const [cityGeoJson,  setCityGeoJson]  = useState(null);
   const [boroughsFeature, setBoroughsFeature] = useState(null);
 
+  const handleLocationSearch = (locationId) => {
+    if (!locationId) return;
+    
+    const city = cities.find(c => c.id === locationId);
+    if (city) {
+      setSelectedCity(city);
+    }
+  };
+
   // Load Copenhagen boroughs once
   useEffect(() => {
     const names = ["Indgang Vest", "Indgang Øst", "Stampen", "Bøllemosen"];
@@ -85,7 +94,7 @@ export default function App() {
 
   return (
     <div className="App-layout">
-      <Sidebar />
+      <Sidebar onLocationSearch={handleLocationSearch} />
 
       <MapContainer
         className="map-container"

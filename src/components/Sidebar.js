@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './Sidebar.css';
 
-export default function Sidebar() {
+export default function Sidebar({ onLocationSearch }) {
   const [type, setType] = useState(null); // 'skydebane' or 'øvelsesterræn'
+  const [selectedLocation, setSelectedLocation] = useState('');
 
   return (
     <aside className="sidebar">
@@ -42,7 +43,11 @@ export default function Sidebar() {
 
       <section className="filter-group">
         <label htmlFor="location">Sted</label>
-        <select id="location" defaultValue="">
+        <select 
+          id="location" 
+          value={selectedLocation} 
+          onChange={(e) => setSelectedLocation(e.target.value)}
+        >
           <option value="" disabled>Vælg sted</option>
           {[
             'Aalborg','Allinge','Fredericia','Frederikshavn','Haderslev',
@@ -57,7 +62,12 @@ export default function Sidebar() {
         </select>
       </section>
 
-      <button className="search-btn">SØG</button>
+      <button 
+        className="search-btn" 
+        onClick={() => onLocationSearch && onLocationSearch(selectedLocation)}
+      >
+        SØG
+      </button>
     </aside>
   );
 }
