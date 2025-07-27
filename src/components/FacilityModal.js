@@ -6,6 +6,8 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
   const [editableData, setEditableData] = useState({
     ammoType: '',
     ammoCount: '',
+    ammo556Count: '',
+    ammo762Count: '',
     size: '',
     accommodation: '',
     meals: '',
@@ -25,6 +27,8 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
       setEditableData({
         ammoType: facility.ammoType,
         ammoCount: facility.ammoCount,
+        ammo556Count: facility.ammo556Count || '',
+        ammo762Count: facility.ammo762Count || '',
         size: facility.size,
         accommodation: facility.accommodation,
         meals: facility.meals,
@@ -36,10 +40,11 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
   const calculateBudget = (data) => {
     let total = 0;
     
-    // Ammunition cost
-    const ammoCount = parseInt(data.ammoCount) || 0;
-    const ammoPrice = basePrices.ammoTypePrice[data.ammoType] || 0;
-    total += ammoCount * ammoPrice;
+    // Ammunition cost - separate calculations for 5.56 and 7.62
+    const ammo556Count = parseInt(data.ammo556Count) || 0;
+    const ammo762Count = parseInt(data.ammo762Count) || 0;
+    total += ammo556Count * basePrices.ammoTypePrice['5.56'];
+    total += ammo762Count * basePrices.ammoTypePrice['7.62'];
     
     // Accommodation cost (assuming 1 day for simplicity)
     const accommodationPax = parseInt(data.accommodation.replace(' pax', '')) || 0;
@@ -72,6 +77,8 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
       selectedDates: selectedDates || [],
       ammoType: editableData.ammoType,
       ammoCount: editableData.ammoCount,
+      ammo556Count: editableData.ammo556Count,
+      ammo762Count: editableData.ammo762Count,
       timeSlot: editableData.size,
       accommodation: editableData.accommodation,
       meals: editableData.meals,
@@ -109,12 +116,26 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
               </select>
             </div>
             <div className="detail-item">
-              <h4>ANTAL AMMO</h4>
+              <h4>ANTAL AMMO 5.56</h4>
               <input 
                 type="number"
-                value={editableData.ammoCount}
-                onChange={(e) => handleInputChange('ammoCount', e.target.value)}
+                value={editableData.ammo556Count}
+                onChange={(e) => handleInputChange('ammo556Count', e.target.value)}
                 className="editable-field"
+                placeholder="Antal 5.56"
+              />
+            </div>
+          </div>
+          
+          <div className="detail-row">
+            <div className="detail-item">
+              <h4>ANTAL AMMO 7.62</h4>
+              <input 
+                type="number"
+                value={editableData.ammo762Count}
+                onChange={(e) => handleInputChange('ammo762Count', e.target.value)}
+                className="editable-field"
+                placeholder="Antal 7.62"
               />
             </div>
           </div>

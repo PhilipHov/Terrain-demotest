@@ -62,8 +62,19 @@ const BookingReceipt = ({ booking, isOpen, onClose, onClear }) => {
               <p>{booking.ammoType}</p>
             </div>
             <div className="receipt-item">
-              <h4>ANTAL AMMO</h4>
-              <p>{booking.ammoCount}</p>
+              <h4>ANTAL AMMO 5.56</h4>
+              <p>{booking.ammo556Count || '0'}</p>
+            </div>
+          </div>
+          
+          <div className="receipt-row">
+            <div className="receipt-item">
+              <h4>ANTAL AMMO 7.62</h4>
+              <p>{booking.ammo762Count || '0'}</p>
+            </div>
+            <div className="receipt-item">
+              <h4>SAMLET AMMO</h4>
+              <p>{(parseInt(booking.ammo556Count || '0') + parseInt(booking.ammo762Count || '0')).toLocaleString()}</p>
             </div>
           </div>
           
