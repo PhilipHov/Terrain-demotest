@@ -35,15 +35,19 @@
   to   { transform: rotate(360deg); }
 }
 
-/* New two-column layout: sidebar + map */
+/* New layout: map as fullscreen background with sidebar overlay */
 .App-layout {
-  display: flex;
+  position: relative;
   height: 100vh;
   overflow: hidden;
 }
 
-/* Map now fills remaining flex space */
+/* Map fills entire screen as background */
 .map-container {
-  flex: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
+  z-index: 1;
 }
