@@ -43,16 +43,10 @@ function FlyToMarker({ position, zoom }) {
 export default function App() {
   const base = process.env.PUBLIC_URL || '';
 
-  // Dummy user data
-  const users = {
-    '460071': {
-      name: 'Philip Andreas Hovgaard',
-      position: 'NK KMP 1/V GHR'
-    },
-    '123456': {
-      name: 'Test Bruger',
-      position: 'Demo'
-    }
+  // Default user data
+  const user = {
+    name: 'Philip Andreas Hovgaard',
+    position: 'NK KMP 1/V GHR'
   };
 
   // Terrain data matching the HTML prototype
@@ -69,8 +63,7 @@ export default function App() {
     { id: 'vejle', name: 'Børkop Øvelsesterræn', type: 'ovelsesterran', coords: [55.659, 9.712] }
   ];
 
-  const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   const [selectedTerrain, setSelectedTerrain] = useState(null);
   const [cityGeoJson, setCityGeoJson] = useState(null);
   const [boroughsFeature, setBoroughsFeature] = useState(null);
@@ -86,24 +79,10 @@ export default function App() {
     location: ''
   });
 
-  // Login on app start
-  useEffect(() => {
-    const handleLogin = () => {
-      const ma = prompt('Indtast dit MA (medarbejdernummer)');
-      if (ma && users[ma]) {
-        setUser(users[ma]);
-        setIsLoggedIn(true);
-      } else if (ma) {
-        alert('Ukendt bruger');
-        handleLogin();
-      }
-    };
-    handleLogin();
-  }, []);
+  
 
   // Load Copenhagen boroughs once
   useEffect(() => {
-    if (!isLoggedIn) return;
     const names = ["Indgang Vest", "Indgang Øst", "Stampen", "Bøllemosen"];
     fetch(`${base}/geojson/bydele.json`)
       .then(res => res.json())
@@ -115,7 +94,7 @@ export default function App() {
         setBoroughsFeature({ type: 'FeatureCollection', features });
       })
       .catch(console.error);
-  }, [base, isLoggedIn]);
+  }, [base]);
 
   // Load selected terrain GeoJSON
   useEffect(() => {
@@ -205,16 +184,7 @@ export default function App() {
     return filtered;
   };
 
-  if (!isLoggedIn) {
-    return (
-      <div className="login-screen">
-        <div className="login-content">
-          <h1>Terrænbooking</h1>
-          <p>Logger ind...</p>
-        </div>
-      </div>
-    );
-  }
+  
 
   return (
     <div className="App">
