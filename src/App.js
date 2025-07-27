@@ -181,7 +181,7 @@ export default function App() {
             data={boroughsFeature}
             style={(feature) => {
               const name = feature.properties.navn || feature.properties.name;
-              if (name === 'Stampen') {
+              if (name === 'Stampen' || name === 'Indgang Vest') {
                 return { color: '#cc0000', weight: 2, fillOpacity: 0.3, fillColor: '#ff0000' };
               }
               return { color: '#0066cc', weight: 2, fillOpacity: 0.1 };
@@ -197,6 +197,20 @@ export default function App() {
                   <div><strong>Dato:</strong> 15/01/2024 - 20/01/2024</div>
                   <div><strong>Kontakt:</strong> lars.nielsen@forsvaret.dk</div>
                   <div><strong>Telefon:</strong> +45 12 34 56 78</div>
+                `;
+                layer.bindTooltip(bookingInfo, { sticky: true });
+                layer.on({
+                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
+                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
+                });
+              } else if (name === 'Indgang Vest') {
+                const bookingInfo = `
+                  <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
+                  <div><strong>Booket af:</strong> Maria Andersen</div>
+                  <div><strong>Tidsinterval:</strong> 08:00 - 18:00</div>
+                  <div><strong>Dato:</strong> 20/01/2024 - 25/01/2024</div>
+                  <div><strong>Kontakt:</strong> maria.andersen@forsvaret.dk</div>
+                  <div><strong>Telefon:</strong> +45 87 65 43 21</div>
                 `;
                 layer.bindTooltip(bookingInfo, { sticky: true });
                 layer.on({
