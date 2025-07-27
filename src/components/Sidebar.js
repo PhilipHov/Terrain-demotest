@@ -47,7 +47,7 @@ export default function Sidebar({ onLocationSearch }) {
         className="directive-btn"
         onClick={() => console.log('Indsæt direktiv clicked')}
       >
-        INDSÆT DIREKTIV
+        + Indsæt direktiv
       </button>
 
       <section className="filter-group">
