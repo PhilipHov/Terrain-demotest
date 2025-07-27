@@ -43,6 +43,13 @@ export default function Sidebar({ onLocationSearch }) {
         <Calendar onDateSelect={(dates) => console.log('Selected dates:', dates)} />
       </section>
 
+      <button 
+        className="directive-btn"
+        onClick={() => console.log('Indsæt direktiv clicked')}
+      >
+        INDSÆT DIREKTIV
+      </button>
+
       <section className="filter-group">
         <label htmlFor="location">Sted</label>
         <select 
@@ -69,13 +76,6 @@ export default function Sidebar({ onLocationSearch }) {
         onClick={() => onLocationSearch && onLocationSearch(selectedLocation)}
       >
         SØG
-      </button>
-
-      <button 
-        className="directive-btn"
-        onClick={() => console.log('Indsæt direktiv clicked')}
-      >
-        INDSÆT DIREKTIV
       </button>
     </aside>
   );
