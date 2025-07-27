@@ -4,7 +4,7 @@ import './FacilityModal.css';
 
 const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComplete }) => {
   const [editableData, setEditableData] = useState({
-    ammoType: '',
+    ammoType: '5.56 og 7.62',
     ammoCount: '',
     ammo556Count: '',
     ammo762Count: '',
@@ -25,7 +25,7 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
   useEffect(() => {
     if (facility) {
       setEditableData({
-        ammoType: facility.ammoType,
+        ammoType: facility.ammoType || '5.56 og 7.62',
         ammoCount: facility.ammoCount,
         ammo556Count: facility.ammo556Count || '',
         ammo762Count: facility.ammo762Count || '',
