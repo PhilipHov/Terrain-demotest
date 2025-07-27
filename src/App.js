@@ -194,85 +194,123 @@ export default function App() {
         />
 
         {boroughsFeature && (
-          <GeoJSON
-            data={boroughsFeature}
-            style={(feature) => {
-              const originalName = feature.properties.originalName;
-              // Stampen (1c), Indgang Vest (1a), and Bøllemosen (1d) are booked (red)
-              if (originalName === 'Stampen' || originalName === 'Indgang Vest' || originalName === 'Bøllemosen') {
-                return { color: '#cc0000', weight: 2, fillOpacity: 0.3, fillColor: '#ff0000' };
-              }
-              // Indgang Øst (1b) is available (blue)
-              return { color: '#0066cc', weight: 2, fillOpacity: 0.1 };
-            }}
-            onEachFeature={(feature, layer) => {
-              const originalName = feature.properties.originalName;
-              const displayName = feature.properties.displayName;
+          <>
+            <GeoJSON
+              data={boroughsFeature}
+              style={(feature) => {
+                const originalName = feature.properties.originalName;
+                // Stampen (1c), Indgang Vest (1a), and Bøllemosen (1d) are booked (red)
+                if (originalName === 'Stampen' || originalName === 'Indgang Vest' || originalName === 'Bøllemosen') {
+                  return { color: '#cc0000', weight: 2, fillOpacity: 0.3, fillColor: '#ff0000' };
+                }
+                // Indgang Øst (1b) is available (blue)
+                return { color: '#0066cc', weight: 2, fillOpacity: 0.1 };
+              }}
+              onEachFeature={(feature, layer) => {
+                const originalName = feature.properties.originalName;
+                const displayName = feature.properties.displayName;
 
-              if (originalName === 'Stampen') {
-                const bookingInfo = `
-                  <div><strong>Område ${displayName}</strong></div>
-                  <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
-                  <div><strong>Booket af:</strong> Lars Nielsen</div>
-                  <div><strong>Tidsinterval:</strong> 10:00 - 16:00</div>
-                  <div><strong>Dato:</strong> 15/01/2024 - 20/01/2024</div>
-                  <div><strong>Kontakt:</strong> lars.nielsen@forsvaret.dk</div>
-                  <div><strong>Telefon:</strong> +45 12 34 56 78</div>
-                `;
-                layer.bindTooltip(bookingInfo, { sticky: true });
-                layer.on({
-                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
-                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
-                });
-              } else if (originalName === 'Indgang Vest') {
-                const bookingInfo = `
-                  <div><strong>Område ${displayName}</strong></div>
-                  <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
-                  <div><strong>Booket af:</strong> Maria Andersen</div>
-                  <div><strong>Tidsinterval:</strong> 08:00 - 18:00</div>
-                  <div><strong>Dato:</strong> 20/01/2024 - 25/01/2024</div>
-                  <div><strong>Kontakt:</strong> maria.andersen@forsvaret.dk</div>
-                  <div><strong>Telefon:</strong> +45 87 65 43 21</div>
-                `;
-                layer.bindTooltip(bookingInfo, { sticky: true });
-                layer.on({
-                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
-                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
-                });
-              } else if (originalName === 'Bøllemosen') {
-                const bookingInfo = `
-                  <div><strong>Område ${displayName}</strong></div>
-                  <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
-                  <div><strong>Booket af:</strong> Peter Jensen</div>
-                  <div><strong>Tidsinterval:</strong> 09:00 - 17:00</div>
-                  <div><strong>Dato:</strong> 25/01/2024 - 30/01/2024</div>
-                  <div><strong>Kontakt:</strong> peter.jensen@forsvaret.dk</div>
-                  <div><strong>Telefon:</strong> +45 98 76 54 32</div>
-                `;
-                layer.bindTooltip(bookingInfo, { sticky: true });
-                layer.on({
-                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
-                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
-                });
-              } else {
-                const availabilityInfo = `
-                  <div><strong>Område ${displayName}</strong></div>
-                  <div style="font-weight: bold; color: #0066cc;">TILGÆNGELIG</div>
-                  <div>i den angivne periode</div>
-                `;
-                layer.bindTooltip(availabilityInfo, { sticky: true });
-                layer.on({
-                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
-                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 }),
-                  click: () => {
-                    const area = facilityData[originalName];
-                    setSelectedFacility(area);
-                    setModalOpen(true);
-                  }
-                });
-              }
-            }}
-          />
+                if (originalName === 'Stampen') {
+                  const bookingInfo = `
+                    <div><strong>Område ${displayName}</strong></div>
+                    <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
+                    <div><strong>Booket af:</strong> Lars Nielsen</div>
+                    <div><strong>Tidsinterval:</strong> 10:00 - 16:00</div>
+                    <div><strong>Dato:</strong> 15/01/2024 - 20/01/2024</div>
+                    <div><strong>Kontakt:</strong> lars.nielsen@forsvaret.dk</div>
+                    <div><strong>Telefon:</strong> +45 12 34 56 78</div>
+                  `;
+                  layer.bindTooltip(bookingInfo, { sticky: true });
+                  layer.on({
+                    mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
+                    mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
+                  });
+                } else if (originalName === 'Indgang Vest') {
+                  const bookingInfo = `
+                    <div><strong>Område ${displayName}</strong></div>
+                    <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
+                    <div><strong>Booket af:</strong> Maria Andersen</div>
+                    <div><strong>Tidsinterval:</strong> 08:00 - 18:00</div>
+                    <div><strong>Dato:</strong> 20/01/2024 - 25/01/2024</div>
+                    <div><strong>Kontakt:</strong> maria.andersen@forsvaret.dk</div>
+                    <div><strong>Telefon:</strong> +45 87 65 43 21</div>
+                  `;
+                  layer.bindTooltip(bookingInfo, { sticky: true });
+                  layer.on({
+                    mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
+                    mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
+                  });
+                } else if (originalName === 'Bøllemosen') {
+                  const bookingInfo = `
+                    <div><strong>Område ${displayName}</strong></div>
+                    <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
+                    <div><strong>Booket af:</strong> Peter Jensen</div>
+                    <div><strong>Tidsinterval:</strong> 09:00 - 17:00</div>
+                    <div><strong>Dato:</strong> 25/01/2024 - 30/01/2024</div>
+                    <div><strong>Kontakt:</strong> peter.jensen@forsvaret.dk</div>
+                    <div><strong>Telefon:</strong> +45 98 76 54 32</div>
+                  `;
+                  layer.bindTooltip(bookingInfo, { sticky: true });
+                  layer.on({
+                    mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
+                    mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
+                  });
+                } else {
+                  const availabilityInfo = `
+                    <div><strong>Område ${displayName}</strong></div>
+                    <div style="font-weight: bold; color: #0066cc;">TILGÆNGELIG</div>
+                    <div>i den angivne periode</div>
+                  `;
+                  layer.bindTooltip(availabilityInfo, { sticky: true });
+                  layer.on({
+                    mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
+                    mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 }),
+                    click: () => {
+                      const area = facilityData[originalName];
+                      setSelectedFacility(area);
+                      setModalOpen(true);
+                    }
+                  });
+                }
+              }}
+            />
+
+            {/* Permanent area labels */}
+            {boroughsFeature.features.map((feature, index) => {
+              // Calculate center of each area for label placement
+              const coords = feature.geometry.coordinates[0][0];
+              const lats = coords.map(coord => coord[1]);
+              const lngs = coords.map(coord => coord[0]);
+              const centerLat = (Math.min(...lats) + Math.max(...lats)) / 2;
+              const centerLng = (Math.min(...lngs) + Math.max(...lngs)) / 2;
+
+              return (
+                <Marker
+                  key={`label-${index}`}
+                  position={[centerLat, centerLng]}
+                  icon={L.divIcon({
+                    html: `<div style="
+                      background: white;
+                      border: 2px solid #333;
+                      border-radius: 50%;
+                      width: 30px;
+                      height: 30px;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-weight: bold;
+                      font-size: 14px;
+                      color: #333;
+                      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                    ">${feature.properties.displayName}</div>`,
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15],
+                    className: 'area-label-marker'
+                  })}
+                />
+              );
+            })}
+          </>
         )}
 
         {cities.map(city => (
