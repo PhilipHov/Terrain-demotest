@@ -1,7 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
-import BookingModal from './components/BookingModal';
 import {
   MapContainer,
   TileLayer,
@@ -21,16 +19,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl:     require('leaflet/dist/images/marker-shadow.png'),
 });
 
-// Create green marker icon for highlighted markers
-const greenIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
-
 // ——— FlyTo helper ———
 function FlyToMarker({ position, zoom }) {
   const map = useMap();
@@ -43,43 +31,32 @@ function FlyToMarker({ position, zoom }) {
 export default function App() {
   const base = process.env.PUBLIC_URL || '';
 
-  // Default user data
-  const user = {
-    name: 'Philip Andreas Hovgaard',
-    position: 'NK KMP 1/V GHR'
-  };
-
-  // Terrain data matching the HTML prototype
-  const terrainData = [
-    { id: 'slagelse', name: 'Slagelse Øvelsesterræn', type: 'ovelsesterran', coords: [55.404, 11.353] },
-    { id: 'jaegerspris', name: 'Jægerspris Skydeterræn', type: 'skydebane', coords: [55.908, 12.076] },
-    { id: 'odeby', name: 'Oddesund Øvelsesterræn', type: 'ovelsesterran', coords: [56.568, 8.464] },
-    { id: 'varde', name: 'Varde Skydeterræn', type: 'skydebane', coords: [55.623, 8.484] },
-    { id: 'aalborg', name: 'Aalborg Øvelsesterræn', type: 'ovelsesterran', coords: [56.997, 9.814] },
-    { id: 'hevring', name: 'Hevring Skydeterræn', type: 'skydebane', coords: [56.524, 10.646] },
-    { id: 'bornholm', name: 'Bornholm Øvelsesterræn', type: 'ovelsesterran', coords: [55.121, 14.970] },
-    { id: 'jyde', name: 'Oksbøl Øvelsesterræn', type: 'ovelsesterran', coords: [55.600, 8.289] },
-    { id: 'skive', name: 'Skive Skydeterræn', type: 'skydebane', coords: [56.560, 9.027] },
-    { id: 'vejle', name: 'Børkop Øvelsesterræn', type: 'ovelsesterran', coords: [55.659, 9.712] }
+  const cities = [
+    { id: 'aalborg',        name: 'Aalborg',        coords: [57.0467,  9.9359],  zoom: 12 },
+    { id: 'allinge',       name: 'Allinge',       coords: [55.2778, 14.8014],  zoom: 12 },
+    { id: 'fredericia',    name: 'Fredericia',    coords: [55.5667,  9.7500],  zoom: 12 },
+    { id: 'frederikshavn', name: 'Frederikshavn', coords: [57.4410, 10.5340],  zoom: 12 },
+    { id: 'haderslev',     name: 'Haderslev',     coords: [55.2500,  9.5000],  zoom: 12 },
+    { id: 'høvelte',       name: 'Høvelte',       coords: [55.8567, 12.3956],  zoom: 12 },
+    { id: 'herning',       name: 'Herning',       coords: [56.1386,  8.9897],  zoom: 12 },
+    { id: 'holstebro',     name: 'Holstebro',     coords: [56.3667,  8.6167],  zoom: 12 },
+    { id: 'næstved',       name: 'Næstved',       coords: [55.2333, 11.7667],  zoom: 12 },
+    { id: 'nørresundby',   name: 'Nørresundby',   coords: [57.0667,  9.9167],  zoom: 12 },
+    { id: 'oksbøl',        name: 'Oksbøl',        coords: [55.6258,  8.2792],  zoom: 12 },
+    { id: 'rønne',         name: 'Rønne',         coords: [55.0986, 14.7014],  zoom: 12 },
+    { id: 'slagelse',      name: 'Slagelse',      coords: [55.4049, 11.3531],  zoom: 12 },
+    { id: 'skive',         name: 'Skive',         coords: [56.5667,  9.0333],  zoom: 12 },
+    { id: 'skrydstrup',    name: 'Skrydstrup',    coords: [55.2422,  9.2595],  zoom: 12 },
+    { id: 'skalstrup',     name: 'Skalstrup',     coords: [55.6500, 12.0833],  zoom: 12 },
+    { id: 'thisted',       name: 'Thisted',       coords: [56.9569,  8.6944],  zoom: 12 },
+    { id: 'varde',         name: 'Varde',         coords: [55.6211,  8.4806],  zoom: 12 },
+    { id: 'vordingborg',   name: 'Vordingborg',   coords: [55.0080, 11.9110],  zoom: 12 },
+    { id: 'karup',         name: 'Karup',         coords: [56.3086,  9.1683],  zoom: 12 },
   ];
 
-  
-  const [selectedTerrain, setSelectedTerrain] = useState(null);
-  const [cityGeoJson, setCityGeoJson] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [cityGeoJson,  setCityGeoJson]  = useState(null);
   const [boroughsFeature, setBoroughsFeature] = useState(null);
-  const [bookingModal, setBookingModal] = useState({ isOpen: false, terrain: null });
-  const [bookings, setBookings] = useState([]);
-  const [searchResults, setSearchResults] = useState(null);
-  const [highlightedTerrains, setHighlightedTerrains] = useState([]);
-  const [filters, setFilters] = useState({
-    planops: null,
-    type: null,
-    date: '',
-    time: '',
-    location: ''
-  });
-
-  
 
   // Load Copenhagen boroughs once
   useEffect(() => {
@@ -96,181 +73,71 @@ export default function App() {
       .catch(console.error);
   }, [base]);
 
-  // Load selected terrain GeoJSON
+  // Load selected city GeoJSON
   useEffect(() => {
-    if (!selectedTerrain) return;
-    fetch(`${base}/geojson/${selectedTerrain.id}.json`)
+    if (!selectedCity) return;
+    fetch(`${base}/geojson/${selectedCity.id}.json`)
       .then(res => res.json())
       .then(setCityGeoJson)
       .catch(console.error);
-  }, [base, selectedTerrain]);
-
-  const handleSearch = (searchFilters) => {
-    setFilters(searchFilters);
-    
-    // Reset highlighting
-    setHighlightedTerrains([]);
-    
-    // Simple validation
-    if (!searchFilters.date || !searchFilters.time) {
-      setSearchResults('Angiv dato og tidsrum for at se tilgængelighed.');
-      return;
-    }
-
-    // Highlight specific location if selected
-    if (searchFilters.location) {
-      const found = terrainData.find(t => t.id === searchFilters.location);
-      if (found) {
-        setHighlightedTerrains([found.id]);
-        setSelectedTerrain(found);
-        setSearchResults(`${found.name} er ledig i det angivne tidsrum.`);
-        return;
-      }
-    }
-
-    // Filter terrains by type
-    let filteredTerrains = terrainData;
-    if (searchFilters.type && searchFilters.type !== 'all') {
-      filteredTerrains = terrainData.filter(t => t.type === searchFilters.type);
-    }
-
-    setHighlightedTerrains(filteredTerrains.map(t => t.id));
-    setSearchResults('Alle valgte områder er ledige i det angivne tidsrum (MVP). Klik på et marker for at booke.');
-  };
-
-  const handleTerrainClick = (terrain) => {
-    setBookingModal({ isOpen: true, terrain });
-  };
-
-  const handleBookingSubmit = (bookingData) => {
-    // Simple validation: ensure date is not today or past
-    const today = new Date();
-    const selectedDate = new Date(bookingData.date);
-    if (selectedDate <= today) {
-      alert('Du kan ikke booke samme dag eller tidligere. Vælg en fremtidig dato.');
-      return;
-    }
-
-    const newBooking = {
-      ...bookingData,
-      id: Date.now(),
-      location: bookingModal.terrain.name,
-      type: bookingModal.terrain.type
-    };
-
-    setBookings([...bookings, newBooking]);
-    setBookingModal({ isOpen: false, terrain: null });
-    
-    setSearchResults(`
-      Booking bekræftet:
-      Terræn: ${newBooking.location}
-      Aktivitet: ${newBooking.activity}
-      Enhedstype: ${newBooking.unit}
-      Dato: ${newBooking.date}
-      Tid: ${newBooking.start} - ${newBooking.end}
-      ${newBooking.ammoType ? `Ammunition: ${newBooking.ammoType} (${newBooking.ammoQty})` : ''}
-      Indkvartering: ${newBooking.lodging}
-      Transport: ${newBooking.transport}
-    `);
-    
-    alert('Booking gennemført! Se detaljer i boksen nedenfor.');
-  };
-
-  const getFilteredTerrains = () => {
-    let filtered = terrainData;
-    if (filters.type && filters.type !== 'all') {
-      filtered = filtered.filter(t => t.type === filters.type);
-    }
-    return filtered;
-  };
-
-  
+  }, [base, selectedCity]);
 
   return (
-    <div className="App">
-      <header className="app-header">
-        <h1>Terrænbooking</h1>
-        <div className="user-info">
-          {user.name} – {user.position}
-        </div>
-      </header>
+    <div className="App-layout">
+      <Sidebar />
 
-      <div className="App-layout">
-        <Sidebar 
-          onSearch={handleSearch}
-          searchResults={searchResults}
-          terrainData={terrainData}
+      <MapContainer
+        className="map-container"
+        center={[56.0, 10.0]}
+        zoom={7}
+      >
+        <TileLayer
+          attribution="© OpenStreetMap contributors"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        <MapContainer
-          className="map-container"
-          center={[56.2639, 9.5018]}
-          zoom={6.3}
-        >
-          <TileLayer
-            attribution="© OpenStreetMap contributors, Wikimedia Maps"
-            url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
-          />
-
-          {boroughsFeature && (
-            <GeoJSON
-              data={boroughsFeature}
-              style={() => ({ color: '#0066cc', weight: 2, fillOpacity: 0.1 })}
-              onEachFeature={(feature, layer) => {
-                const name = feature.properties.navn || feature.properties.name;
-                layer.bindTooltip(name, { sticky: true });
-                layer.on({
-                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
-                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 })
-                });
-              }}
-            />
-          )}
-
-          {getFilteredTerrains().map(terrain => {
-            const isHighlighted = highlightedTerrains.includes(terrain.id);
-            const markerIcon = isHighlighted ? greenIcon : new L.Icon.Default();
-            
-            return (
-              <Marker
-                key={terrain.id}
-                position={terrain.coords}
-                icon={markerIcon}
-                eventHandlers={{ click: () => handleTerrainClick(terrain) }}
-              >
-              </Marker>
-            );
-          })}
-
-          {selectedTerrain && (
-            <FlyToMarker position={selectedTerrain.coords} zoom={12} />
-          )}
-
-          {cityGeoJson && (
-            <GeoJSON
-              data={cityGeoJson}
-              style={() => ({ color: '#444', weight: 1, fillOpacity: 0.2 })}
-              onEachFeature={(feature, layer) => {
-                const name = feature.properties.navn || feature.properties.name;
-                layer.bindTooltip(name, { sticky: true });
-                layer.on({
-                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
-                  mouseout:  e => e.target.setStyle({ weight: 1, fillOpacity: 0.2 })
-                });
-              }}
-            />
-          )}
-        </MapContainer>
-
-        {bookingModal.isOpen && (
-          <BookingModal
-            terrain={bookingModal.terrain}
-            onClose={() => setBookingModal({ isOpen: false, terrain: null })}
-            onSubmit={handleBookingSubmit}
-            filters={filters}
+        {boroughsFeature && (
+          <GeoJSON
+            data={boroughsFeature}
+            style={() => ({ color: '#0066cc', weight: 2, fillOpacity: 0.1 })}
+            onEachFeature={(feature, layer) => {
+              const name = feature.properties.navn || feature.properties.name;
+              layer.bindTooltip(name, { sticky: true });
+              layer.on({
+                mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
+                mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 })
+              });
+            }}
           />
         )}
-      </div>
+
+        {cities.map(city => (
+          <Marker
+            key={city.id}
+            position={city.coords}
+            eventHandlers={{ click: () => setSelectedCity(city) }}
+          />
+        ))}
+
+        {selectedCity && (
+          <FlyToMarker position={selectedCity.coords} zoom={selectedCity.zoom} />
+        )}
+
+        {cityGeoJson && (
+          <GeoJSON
+            data={cityGeoJson}
+            style={() => ({ color: '#444', weight: 1, fillOpacity: 0.2 })}
+            onEachFeature={(feature, layer) => {
+              const name = feature.properties.navn || feature.properties.name;
+              layer.bindTooltip(name, { sticky: true });
+              layer.on({
+                mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
+                mouseout:  e => e.target.setStyle({ weight: 1, fillOpacity: 0.2 })
+              });
+            }}
+          />
+        )}
+      </MapContainer>
     </div>
   );
 }
