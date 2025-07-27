@@ -52,6 +52,7 @@ export default function App() {
     { id: 'varde',         name: 'Varde',         coords: [55.6211,  8.4806],  zoom: 12 },
     { id: 'vordingborg',   name: 'Vordingborg',   coords: [55.0080, 11.9110],  zoom: 12 },
     { id: 'karup',         name: 'Karup',         coords: [56.3086,  9.1683],  zoom: 12 },
+    { id: 'dyrehaven',     name: 'Dyrehaven',     coords: [55.7738, 12.5726],  zoom: 12 },
   ];
 
   const [selectedCity, setSelectedCity] = useState(null);

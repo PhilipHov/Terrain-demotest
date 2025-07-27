@@ -42,7 +42,7 @@ export default function Sidebar() {
             'Aalborg','Allinge','Fredericia','Frederikshavn','Haderslev',
             'Høvelte','Herning','Holstebro','Næstved','Nørresundby',
             'Oksbøl','Rønne','Slagelse','Skive','Skrydstrup',
-            'Skalstrup','Thisted','Varde','Vordingborg','Karup'
+            'Skalstrup','Thisted','Varde','Vordingborg','Karup','Dyrehaven'
           ].map(city => (
             <option key={city} value={city.toLowerCase()}>
               {city}
