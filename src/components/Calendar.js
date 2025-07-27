@@ -42,14 +42,17 @@ const Calendar = ({ onDateSelect }) => {
     const clickedDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
     const dateString = clickedDate.toISOString().split('T')[0];
     
+    let newSelectedDates;
     if (selectedDates.includes(dateString)) {
-      setSelectedDates(selectedDates.filter(d => d !== dateString));
+      newSelectedDates = selectedDates.filter(d => d !== dateString);
     } else {
-      setSelectedDates([...selectedDates, dateString]);
+      newSelectedDates = [...selectedDates, dateString];
     }
     
+    setSelectedDates(newSelectedDates);
+    
     if (onDateSelect) {
-      onDateSelect(selectedDates);
+      onDateSelect(newSelectedDates);
     }
   };
 

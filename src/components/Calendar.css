@@ -69,8 +69,9 @@
 }
 
 .calendar-day.selected {
-  background: #e3f2fd;
-  border: 2px solid #2196f3;
+  background: #2196f3;
+  color: white;
+  border: 2px solid #1976d2;
 }
 
 .calendar-day.booked {
