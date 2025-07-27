@@ -285,6 +285,7 @@ export default function App() {
         isOpen={receiptOpen}
         onClose={() => setReceiptOpen(false)}
         onClear={handleClear}
+        onClear={handleClear}
       />
     </div>
   );
