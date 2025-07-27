@@ -4,7 +4,7 @@ import './Sidebar.css';
 
 const Sidebar = ({ onLocationSearch, onDatesSelected, onClear }) => {
   const [type, setType] = useState(null); // 'skydebane' or 'øvelsesterræn'
-  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('dyrehaven');
   const [selectedUnitType, setSelectedUnitType] = useState('');
   const [resetCalendar, setResetCalendar] = useState(false);
 
@@ -81,10 +81,10 @@ const Sidebar = ({ onLocationSearch, onDatesSelected, onClear }) => {
         >
           <option value="" disabled>Vælg sted</option>
           {[
-            'Aalborg','Allinge','Fredericia','Frederikshavn','Haderslev',
+            'Dyrehaven','Aalborg','Allinge','Fredericia','Frederikshavn','Haderslev',
             'Høvelte','Herning','Holstebro','Næstved','Nørresundby',
             'Oksbøl','Rønne','Slagelse','Skive','Skrydstrup',
-            'Skalstrup','Thisted','Varde','Vordingborg','Karup','Dyrehaven'
+            'Skalstrup','Thisted','Varde','Vordingborg','Karup'
           ].map(city => (
             <option key={city} value={city.toLowerCase()}>
               {city}
