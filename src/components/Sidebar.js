@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Calendar from './Calendar';
 import './Sidebar.css';
 
 export default function Sidebar({ onLocationSearch }) {
@@ -27,8 +28,8 @@ export default function Sidebar({ onLocationSearch }) {
 
       <section className="filter-group">
         <label htmlFor="unit-type">Enhedstype</label>
-        <select id="unit-type">
-          <option value="" disabled selected>Vælg enhedstype</option>
+        <select id="unit-type" defaultValue="">
+          <option value="" disabled>Vælg enhedstype</option>
           <option value="infanteri">Infanteri</option>
           <option value="panserstyrke">Panserstyrke</option>
           <option value="artilleri">Artilleri</option>
@@ -39,19 +40,7 @@ export default function Sidebar({ onLocationSearch }) {
       </section>
 
       <section className="filter-group">
-        <label htmlFor="date-from">Fra dato</label>
-        <input id="date-from" type="date" placeholder="Fra dato" />
-        
-        <label htmlFor="date-to" style={{marginTop: '0.5rem'}}>Til dato</label>
-        <input id="date-to" type="date" placeholder="Til dato" />
-      </section>
-
-      <section className="filter-group">
-        <label htmlFor="time-from">Fra tidspunkt</label>
-        <input id="time-from" type="time" placeholder="Fra tidspunkt" />
-        
-        <label htmlFor="time-to" style={{marginTop: '0.5rem'}}>Til tidspunkt</label>
-        <input id="time-to" type="time" placeholder="Til tidspunkt" />
+        <Calendar onDateSelect={(dates) => console.log('Selected dates:', dates)} />
       </section>
 
       <section className="filter-group">
