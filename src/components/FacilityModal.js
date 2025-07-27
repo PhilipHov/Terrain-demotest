@@ -115,6 +115,9 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
                 <option value="9mm">9mm</option>
               </select>
             </div>
+          </div>
+          
+          <div className="detail-row">
             <div className="detail-item">
               <h4>ANTAL AMMO 5.56</h4>
               <input 
@@ -125,9 +128,6 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
                 placeholder="Antal 5.56"
               />
             </div>
-          </div>
-          
-          <div className="detail-row">
             <div className="detail-item">
               <h4>ANTAL AMMO 7.62</h4>
               <input 
