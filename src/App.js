@@ -283,7 +283,7 @@ export default function App() {
                     mouseout: (e) =>
                       e.target.setStyle({ weight: 2, fillOpacity: 0.3 }),
                   });
-                } else if (originalName === "Bllemosen") {
+                } else if (originalName === "Bøllemosen") {
                   const bookingInfo = `
                     <div><strong>Område ${displayName}</strong></div>
                     <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
