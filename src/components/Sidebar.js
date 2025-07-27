@@ -9,6 +9,10 @@ export default function Sidebar({ onLocationSearch }) {
   return (
     <aside className="sidebar">
       <section className="filter-group">
+        <h2 className="planops-header">PLANOPS</h2>
+      </section>
+      
+      <section className="filter-group">
         <h3>Aktivitetstype</h3>
         <div className="type-buttons">
           <button
