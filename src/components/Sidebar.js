@@ -51,7 +51,7 @@ const Sidebar = ({ onLocationSearch, onDatesSelected, onClear }) => {
       </section>
 
       <section className="filter-group">
-        <Calendar onDatesSelected={onDatesSelected} resetDates={selectedDates.length === 0} />
+        <Calendar onDatesSelected={onDatesSelected} resetDates={false} />
       </section>
 
       <button 
