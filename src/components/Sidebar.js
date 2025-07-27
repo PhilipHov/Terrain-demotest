@@ -8,7 +8,7 @@ export default function Sidebar({ onLocationSearch }) {
   return (
     <aside className="sidebar">
       <section className="filter-group">
-        <h3>Type</h3>
+        <h3>Aktivitetstype</h3>
         <div className="type-buttons">
           <button
             className={`type-btn ${type === 'skydebane' ? 'selected' : ''}`}
@@ -23,6 +23,19 @@ export default function Sidebar({ onLocationSearch }) {
             Øvelsesterræn
           </button>
         </div>
+      </section>
+
+      <section className="filter-group">
+        <label htmlFor="unit-type">Enhedstype</label>
+        <select id="unit-type">
+          <option value="" disabled selected>Vælg enhedstype</option>
+          <option value="infanteri">Infanteri</option>
+          <option value="panserstyrke">Panserstyrke</option>
+          <option value="artilleri">Artilleri</option>
+          <option value="ingeniør">Ingeniør</option>
+          <option value="militærpoliti">Militærpoliti</option>
+          <option value="logistik">Logistik</option>
+        </select>
       </section>
 
       <section className="filter-group">
