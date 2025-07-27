@@ -40,14 +40,6 @@ export default function Sidebar({ onLocationSearch }) {
       </section>
 
       <section className="filter-group">
-        <label htmlFor="date-from">Dato fra</label>
-        <input 
-          type="date" 
-          id="date-from"
-        />
-      </section>
-
-      <section className="filter-group">
         <Calendar onDateSelect={(dates) => console.log('Selected dates:', dates)} />
       </section>
 
