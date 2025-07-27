@@ -14,7 +14,7 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
 
   // Base prices for calculation
   const basePrices = {
-    ammoTypePrice: { '5.56': 2, '7.62': 3, '9mm': 1.5 },
+    ammoTypePrice: { '5.56': 2, '7.62': 3, '5.56 og 7.62': 2.5, '9mm': 1.5 },
     accommodationPrice: 150, // per person per day
     mealsPrice: 100, // per person per day
     timeSlotPrice: 500 // base price per time slot
@@ -104,6 +104,7 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
               >
                 <option value="5.56">5.56</option>
                 <option value="7.62">7.62</option>
+                <option value="5.56 og 7.62">5.56 og 7.62</option>
                 <option value="9mm">9mm</option>
               </select>
             </div>
