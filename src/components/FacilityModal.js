@@ -25,7 +25,7 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
   useEffect(() => {
     if (facility) {
       setEditableData({
-        ammoType: facility.ammoType || '5.56 og 7.62',
+        ammoType: '5.56 og 7.62',
         ammoCount: facility.ammoCount,
         ammo556Count: facility.ammo556Count || '',
         ammo762Count: facility.ammo762Count || '',

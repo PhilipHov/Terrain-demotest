@@ -239,10 +239,6 @@ export default function App() {
                       setModalOpen(true);
                     }
                   }
-                });tyData[name]);
-                      setModalOpen(true);
-                    }
-                  }
                 });
               }
             }}
