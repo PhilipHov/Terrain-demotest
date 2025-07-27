@@ -35,7 +35,7 @@ function MapController({ shouldReset, onResetComplete }) {
   const map = useMap();
   useEffect(() => {
     if (shouldReset) {
-      map.flyTo([56.0, 10.0], 7, { duration: 1.5 });
+      map.flyTo([56.0, 10.0], 6, { duration: 1.5 });
       onResetComplete();
     }
   }, [map, shouldReset, onResetComplete]);
@@ -169,7 +169,7 @@ export default function App() {
       <MapContainer
         className="map-container"
         center={[56.0, 10.0]}
-        zoom={7}
+        zoom={6}
       >
         <TileLayer
           attribution="© OpenStreetMap contributors"
