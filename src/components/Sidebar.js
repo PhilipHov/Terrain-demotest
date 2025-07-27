@@ -25,8 +25,11 @@ export default function Sidebar() {
       </section>
 
       <section className="filter-group">
-        <label htmlFor="date">Dato</label>
-        <input id="date" type="date" placeholder="Vælg dato" />
+        <label htmlFor="date-from">Fra dato</label>
+        <input id="date-from" type="date" placeholder="Fra dato" />
+        
+        <label htmlFor="date-to" style={{marginTop: '0.5rem'}}>Til dato</label>
+        <input id="date-to" type="date" placeholder="Til dato" />
       </section>
 
       <section className="filter-group">
