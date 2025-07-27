@@ -270,6 +270,7 @@ export default function App() {
         booking={bookingData}
         isOpen={receiptOpen}
         onClose={() => setReceiptOpen(false)}
+        onClear={handleClear}
       />
     </div>
   );

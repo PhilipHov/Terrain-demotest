@@ -2,8 +2,13 @@
 import React from 'react';
 import './BookingReceipt.css';
 
-const BookingReceipt = ({ booking, isOpen, onClose }) => {
+const BookingReceipt = ({ booking, isOpen, onClose, onClear }) => {
   if (!isOpen || !booking) return null;
+
+  const handleClose = () => {
+    onClose();
+    if (onClear) onClear();
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -31,9 +36,9 @@ const BookingReceipt = ({ booking, isOpen, onClose }) => {
   };
 
   return (
-    <div className="receipt-overlay" onClick={onClose}>
+    <div className="receipt-overlay" onClick={handleClose}>
       <div className="receipt-content" onClick={(e) => e.stopPropagation()}>
-        <button className="receipt-close" onClick={onClose}>×</button>
+        <button className="receipt-close" onClick={handleClose}>×</button>
         
         <div className="receipt-header">
           <h2>BOOKING KVITTERING</h2>
