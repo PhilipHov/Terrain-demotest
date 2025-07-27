@@ -275,41 +275,7 @@ export default function App() {
               }}
             />
 
-            {/* Permanent area labels */}
-            {boroughsFeature.features.map((feature, index) => {
-              // Calculate center of each area for label placement
-              const coords = feature.geometry.coordinates[0][0];
-              const lats = coords.map(coord => coord[1]);
-              const lngs = coords.map(coord => coord[0]);
-              const centerLat = (Math.min(...lats) + Math.max(...lats)) / 2;
-              const centerLng = (Math.min(...lngs) + Math.max(...lngs)) / 2;
-
-              return (
-                <Marker
-                  key={`label-${index}`}
-                  position={[centerLat, centerLng]}
-                  icon={L.divIcon({
-                    html: `<div style="
-                      background: white;
-                      border: 2px solid #333;
-                      border-radius: 50%;
-                      width: 30px;
-                      height: 30px;
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      font-weight: bold;
-                      font-size: 14px;
-                      color: #333;
-                      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-                    ">${feature.properties.displayName}</div>`,
-                    iconSize: [30, 30],
-                    iconAnchor: [15, 15],
-                    className: 'area-label-marker'
-                  })}
-                />
-              );
-            })}
+            
           </>
         )}
 
