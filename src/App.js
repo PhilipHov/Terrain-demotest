@@ -134,7 +134,12 @@ export default function App() {
                   mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
                 });
               } else {
-                layer.bindTooltip(name, { sticky: true });
+                const availabilityInfo = `
+                  <div><strong>${name}</strong></div>
+                  <div style="font-weight: bold; color: #0066cc;">TILGÆNGELIG</div>
+                  <div>i den angivne periode</div>
+                `;
+                layer.bindTooltip(availabilityInfo, { sticky: true });
                 layer.on({
                   mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
                   mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 })
