@@ -9,8 +9,11 @@ const Calendar = ({ onDatesSelected, resetDates }) => {
   useEffect(() => {
     if (resetDates) {
       setSelectedDates([]);
+      if (onDatesSelected) {
+        onDatesSelected([]);
+      }
     }
-  }, [resetDates]);
+  }, [resetDates, onDatesSelected]);
 
   const monthNames = [
     'januar', 'februar', 'marts', 'april', 'maj', 'juni',

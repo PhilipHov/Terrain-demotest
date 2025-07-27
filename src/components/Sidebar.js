@@ -5,12 +5,17 @@ import './Sidebar.css';
 const Sidebar = ({ onLocationSearch, onDatesSelected, onClear }) => {
   const [type, setType] = useState(null); // 'skydebane' or 'øvelsesterræn'
   const [selectedLocation, setSelectedLocation] = useState('');
+  const [resetCalendar, setResetCalendar] = useState(false);
 
   const handleClear = () => {
     setType(null);
     setSelectedLocation('');
+    setResetCalendar(true);
     if (onDatesSelected) onDatesSelected([]);
     if (onClear) onClear();
+    
+    // Reset the resetCalendar flag after a brief delay
+    setTimeout(() => setResetCalendar(false), 100);
   };
 
   return (
@@ -51,7 +56,7 @@ const Sidebar = ({ onLocationSearch, onDatesSelected, onClear }) => {
       </section>
 
       <section className="filter-group">
-        <Calendar onDatesSelected={onDatesSelected} resetDates={false} />
+        <Calendar onDatesSelected={onDatesSelected} resetDates={resetCalendar} />
       </section>
 
       <button 
