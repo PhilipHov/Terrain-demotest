@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Calendar from './Calendar';
 import './Sidebar.css';
 
 export default function Sidebar({ onLocationSearch }) {
@@ -37,10 +36,6 @@ export default function Sidebar({ onLocationSearch }) {
           <option value="militærpoliti">Militærpoliti</option>
           <option value="logistik">Logistik</option>
         </select>
-      </section>
-
-      <section className="filter-group">
-        <Calendar onDateSelect={(dates) => console.log('Selected dates:', dates)} />
       </section>
 
       <section className="filter-group">
