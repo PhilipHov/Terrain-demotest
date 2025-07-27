@@ -47,6 +47,23 @@ const Calendar = ({ onDateSelect }) => {
       newSelectedDates = selectedDates.filter(d => d !== dateString);
     } else {
       newSelectedDates = [...selectedDates, dateString];
+      
+      // If we now have exactly 2 dates, fill in all dates between them
+      if (newSelectedDates.length === 2) {
+        const dates = newSelectedDates.map(d => new Date(d)).sort((a, b) => a - b);
+        const startDate = dates[0];
+        const endDate = dates[1];
+        
+        const allDatesInRange = [];
+        const currentDate = new Date(startDate);
+        
+        while (currentDate <= endDate) {
+          allDatesInRange.push(currentDate.toISOString().split('T')[0]);
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+        
+        newSelectedDates = allDatesInRange;
+      }
     }
     
     setSelectedDates(newSelectedDates);
