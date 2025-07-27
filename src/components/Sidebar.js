@@ -39,6 +39,22 @@ export default function Sidebar({ onLocationSearch }) {
       </section>
 
       <section className="filter-group">
+        <label htmlFor="date-from">Dato fra</label>
+        <input 
+          type="date" 
+          id="date-from"
+        />
+      </section>
+
+      <section className="filter-group">
+        <label htmlFor="date-to">Dato til</label>
+        <input 
+          type="date" 
+          id="date-to"
+        />
+      </section>
+
+      <section className="filter-group">
         <label htmlFor="location">Sted</label>
         <select 
           id="location" 
