@@ -69,15 +69,16 @@
 
 .directive-btn {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.4rem 0.5rem;
   background: #3a3f47;
   border: 1px solid #555;
   color: #ccc;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.2s;
   text-align: left;
+  margin-bottom: 1rem;
 }
 
 .directive-btn:hover {
