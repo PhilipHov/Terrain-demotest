@@ -1,4 +1,3 @@
-
 .receipt-overlay {
   position: fixed;
   top: 0;
@@ -111,18 +110,18 @@
 }
 
 .total-budget {
-  background: #f8f8f8;
+  background: #f0f8f0;
   padding: 10px;
   border-radius: 4px;
-  border: 2px solid #6b9c6e;
+  border: 2px solid #4a8f4e;
 }
 
 .total-budget h4 {
-  color: #6b9c6e;
+  color: #2d6b31;
 }
 
 .total-budget p {
-  color: #6b9c6e;
+  color: #2d6b31;
   font-size: 16px;
 }
 
@@ -130,17 +129,11 @@
   text-align: center;
   margin-top: 25px;
   padding-top: 20px;
-  border-top: 2px solid #6b9c6e;
-}
-
-.receipt-footer p {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #666;
+  border-top: 2px solid #4a8f4e;
 }
 
 .receipt-footer p:last-child {
   font-weight: bold;
-  color: #6b9c6e;
+  color: #2d6b31;
   font-size: 16px;
 }

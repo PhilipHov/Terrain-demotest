@@ -68,13 +68,13 @@
 }
 
 .calendar-day.selected {
-  background: #2196f3;
+  background: #1976d2;
   color: white;
-  border: 2px solid #1976d2;
+  border: 2px solid #0d47a1;
 }
 
 .calendar-day.booked {
-  background: #f5f0f0;
+  background: #ffe0e0;
 }
 
 .day-number {
@@ -83,7 +83,7 @@
 }
 
 .booking-label {
-  background: #c57c7c;
+  background: #d64545;
   color: white;
   font-size: 0.5rem;
   padding: 1px;
