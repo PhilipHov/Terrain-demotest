@@ -66,3 +66,17 @@
 .search-btn:hover {
   background: #45a047;
 }
+
+.directive-btn {
+  padding: 0.75rem;
+  background: #2196f3;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.directive-btn:hover {
+  background: #1976d2;
+}
