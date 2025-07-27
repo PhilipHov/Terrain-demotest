@@ -109,9 +109,9 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
                 onChange={(e) => handleInputChange('ammoType', e.target.value)}
                 className="editable-field"
               >
+                <option value="5.56 og 7.62">5.56 og 7.62</option>
                 <option value="5.56">5.56</option>
                 <option value="7.62">7.62</option>
-                <option value="5.56 og 7.62">5.56 og 7.62</option>
                 <option value="9mm">9mm</option>
               </select>
             </div>
