@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import FacilityModal from './components/FacilityModal';
+import BookingReceipt from './components/BookingReceipt';
 import {
   MapContainer,
   TileLayer,
@@ -61,6 +62,9 @@ export default function App() {
   const [boroughsFeature, setBoroughsFeature] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedFacility, setSelectedFacility] = useState(null);
+  const [receiptOpen, setReceiptOpen] = useState(false);
+  const [bookingData, setBookingData] = useState(null);
+  const [selectedDates, setSelectedDates] = useState([]);
 
   const facilityData = {
     'Indgang Øst': {
@@ -90,6 +94,11 @@ export default function App() {
       meals: '15 pax',
       totalBudget: '28.500'
     }
+  };
+
+  const handleBookingComplete = (booking) => {
+    setBookingData(booking);
+    setReceiptOpen(true);
   };
 
   const handleLocationSearch = (locationId) => {
@@ -127,7 +136,7 @@ export default function App() {
 
   return (
     <div className="App-layout">
-      <Sidebar onLocationSearch={handleLocationSearch} />
+      <Sidebar onLocationSearch={handleLocationSearch} onDatesSelected={setSelectedDates} />
 
       <MapContainer
         className="map-container"
@@ -220,6 +229,14 @@ export default function App() {
         facility={selectedFacility}
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
+        selectedDates={selectedDates}
+        onBookingComplete={handleBookingComplete}
+      />
+
+      <BookingReceipt 
+        booking={bookingData}
+        isOpen={receiptOpen}
+        onClose={() => setReceiptOpen(false)}
       />
     </div>
   );

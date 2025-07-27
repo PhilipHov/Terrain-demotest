@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Calendar from './Calendar';
 import './Sidebar.css';
 
-export default function Sidebar({ onLocationSearch }) {
+const Sidebar = ({ onLocationSearch, onDatesSelected }) => {
   const [type, setType] = useState(null); // 'skydebane' or 'øvelsesterræn'
   const [selectedLocation, setSelectedLocation] = useState('');
 
@@ -11,7 +11,7 @@ export default function Sidebar({ onLocationSearch }) {
       <section className="filter-group">
         <h2 className="planops-header">PLANOPS</h2>
       </section>
-      
+
       <section className="filter-group">
         <h3>Aktivitetstype</h3>
         <div className="type-buttons">
@@ -44,7 +44,7 @@ export default function Sidebar({ onLocationSearch }) {
       </section>
 
       <section className="filter-group">
-        <Calendar onDateSelect={(dates) => console.log('Selected dates:', dates)} />
+        <Calendar onDatesSelected={onDatesSelected} />
       </section>
 
       <button 
@@ -84,3 +84,5 @@ export default function Sidebar({ onLocationSearch }) {
     </aside>
   );
 }
+
+export default Sidebar;

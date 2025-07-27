@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './FacilityModal.css';
 
-const FacilityModal = ({ facility, isOpen, onClose }) => {
+const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComplete }) => {
   const [editableData, setEditableData] = useState({
     ammoType: '',
     ammoCount: '',
@@ -64,6 +64,22 @@ const FacilityModal = ({ facility, isOpen, onClose }) => {
     }
     
     setEditableData(newData);
+  };
+
+  const handleBooking = () => {
+    const bookingData = {
+      facilityName: facility.name,
+      selectedDates: selectedDates || [],
+      ammoType: editableData.ammoType,
+      ammoCount: editableData.ammoCount,
+      timeSlot: editableData.size,
+      accommodation: editableData.accommodation,
+      meals: editableData.meals,
+      totalBudget: editableData.totalBudget
+    };
+    
+    onBookingComplete(bookingData);
+    onClose();
   };
 
   if (!isOpen || !facility) return null;
@@ -142,7 +158,7 @@ const FacilityModal = ({ facility, isOpen, onClose }) => {
             </div>
           </div>
           
-          <button className="book-button">BOOK NU</button>
+          <button className="book-button" onClick={handleBooking}>BOOK NU</button>
         </div>
       </div>
     </div>
