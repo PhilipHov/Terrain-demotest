@@ -153,6 +153,17 @@ export default function App() {
         const features = fc.features.filter(f => {
           const n = f.properties.navn || f.properties.name;
           return names.includes(n);
+        }).map((feature, index) => {
+          // Rename areas to 1a, 1b, 1c, 1d
+          const areaNames = ['1a', '1b', '1c', '1d'];
+          return {
+            ...feature,
+            properties: {
+              ...feature.properties,
+              displayName: areaNames[index],
+              originalName: feature.properties.navn || feature.properties.name
+            }
+          };
         });
         setBoroughsFeature({ type: 'FeatureCollection', features });
       })
@@ -186,17 +197,21 @@ export default function App() {
           <GeoJSON
             data={boroughsFeature}
             style={(feature) => {
-              const name = feature.properties.navn || feature.properties.name;
-              if (name === 'Stampen' || name === 'Indgang Vest') {
+              const originalName = feature.properties.originalName;
+              // Stampen (1c), Indgang Vest (1a), and Bøllemosen (1d) are booked (red)
+              if (originalName === 'Stampen' || originalName === 'Indgang Vest' || originalName === 'Bøllemosen') {
                 return { color: '#cc0000', weight: 2, fillOpacity: 0.3, fillColor: '#ff0000' };
               }
+              // Indgang Øst (1b) is available (blue)
               return { color: '#0066cc', weight: 2, fillOpacity: 0.1 };
             }}
             onEachFeature={(feature, layer) => {
-              const name = feature.properties.navn || feature.properties.name;
+              const originalName = feature.properties.originalName;
+              const displayName = feature.properties.displayName;
 
-              if (name === 'Stampen') {
+              if (originalName === 'Stampen') {
                 const bookingInfo = `
+                  <div><strong>Område ${displayName}</strong></div>
                   <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
                   <div><strong>Booket af:</strong> Lars Nielsen</div>
                   <div><strong>Tidsinterval:</strong> 10:00 - 16:00</div>
@@ -209,8 +224,9 @@ export default function App() {
                   mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
                   mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
                 });
-              } else if (name === 'Indgang Vest') {
+              } else if (originalName === 'Indgang Vest') {
                 const bookingInfo = `
+                  <div><strong>Område ${displayName}</strong></div>
                   <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
                   <div><strong>Booket af:</strong> Maria Andersen</div>
                   <div><strong>Tidsinterval:</strong> 08:00 - 18:00</div>
@@ -223,9 +239,24 @@ export default function App() {
                   mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
                   mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
                 });
+              } else if (originalName === 'Bøllemosen') {
+                const bookingInfo = `
+                  <div><strong>Område ${displayName}</strong></div>
+                  <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
+                  <div><strong>Booket af:</strong> Peter Jensen</div>
+                  <div><strong>Tidsinterval:</strong> 09:00 - 17:00</div>
+                  <div><strong>Dato:</strong> 25/01/2024 - 30/01/2024</div>
+                  <div><strong>Kontakt:</strong> peter.jensen@forsvaret.dk</div>
+                  <div><strong>Telefon:</strong> +45 98 76 54 32</div>
+                `;
+                layer.bindTooltip(bookingInfo, { sticky: true });
+                layer.on({
+                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
+                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
+                });
               } else {
                 const availabilityInfo = `
-                  <div><strong>${name}</strong></div>
+                  <div><strong>Område ${displayName}</strong></div>
                   <div style="font-weight: bold; color: #0066cc;">TILGÆNGELIG</div>
                   <div>i den angivne periode</div>
                 `;
@@ -234,7 +265,7 @@ export default function App() {
                   mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
                   mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 }),
                   click: () => {
-                    const area = facilityData[name];
+                    const area = facilityData[originalName];
                     setSelectedFacility(area);
                     setModalOpen(true);
                   }
