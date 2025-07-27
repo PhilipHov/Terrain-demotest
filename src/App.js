@@ -243,9 +243,11 @@ export default function App() {
               return {
                   color: "#0066cc",
                   weight: 2,
-                  fillOpacity: 0.1
+                  fillOpacity: 0.1,
                 };
-                feature.properties.originalName;
+              }}
+              onEachFeature={(feature, layer) => {
+                const originalName = feature.properties.originalName;
                 const displayName = feature.properties.displayName;
                 if (originalName === "Stampen") {
                   const bookingInfo = `
