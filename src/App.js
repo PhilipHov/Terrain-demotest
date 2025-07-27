@@ -137,7 +137,7 @@ export default function App() {
 
   const handleLocationSearch = (locationId) => {
     if (!locationId) return;
-    
+
     const city = cities.find(c => c.id === locationId);
     if (city) {
       setSelectedCity(city);
@@ -194,7 +194,7 @@ export default function App() {
             }}
             onEachFeature={(feature, layer) => {
               const name = feature.properties.navn || feature.properties.name;
-              
+
               if (name === 'Stampen') {
                 const bookingInfo = `
                   <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
