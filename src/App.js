@@ -109,14 +109,37 @@ export default function App() {
         {boroughsFeature && (
           <GeoJSON
             data={boroughsFeature}
-            style={() => ({ color: '#0066cc', weight: 2, fillOpacity: 0.1 })}
+            style={(feature) => {
+              const name = feature.properties.navn || feature.properties.name;
+              if (name === 'Stampen') {
+                return { color: '#cc0000', weight: 2, fillOpacity: 0.3, fillColor: '#ff0000' };
+              }
+              return { color: '#0066cc', weight: 2, fillOpacity: 0.1 };
+            }}
             onEachFeature={(feature, layer) => {
               const name = feature.properties.navn || feature.properties.name;
-              layer.bindTooltip(name, { sticky: true });
-              layer.on({
-                mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
-                mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 })
-              });
+              
+              if (name === 'Stampen') {
+                const bookingInfo = `
+                  <div style="font-weight: bold; color: #cc0000;">IKKE TILGÆNGELIG</div>
+                  <div><strong>Booket af:</strong> Lars Nielsen</div>
+                  <div><strong>Tidsinterval:</strong> 10:00 - 16:00</div>
+                  <div><strong>Dato:</strong> 15/01/2024 - 20/01/2024</div>
+                  <div><strong>Kontakt:</strong> lars.nielsen@forsvaret.dk</div>
+                  <div><strong>Telefon:</strong> +45 12 34 56 78</div>
+                `;
+                layer.bindTooltip(bookingInfo, { sticky: true });
+                layer.on({
+                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.6 }),
+                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.3 })
+                });
+              } else {
+                layer.bindTooltip(name, { sticky: true });
+                layer.on({
+                  mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
+                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 })
+                });
+              }
             }}
           />
         )}
