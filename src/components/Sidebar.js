@@ -33,8 +33,11 @@ export default function Sidebar() {
       </section>
 
       <section className="filter-group">
-        <label htmlFor="time">Tidsrum</label>
-        <input id="time" type="time" placeholder="Vælg tidsrum" />
+        <label htmlFor="time-from">Fra tidspunkt</label>
+        <input id="time-from" type="time" placeholder="Fra tidspunkt" />
+        
+        <label htmlFor="time-to" style={{marginTop: '0.5rem'}}>Til tidspunkt</label>
+        <input id="time-to" type="time" placeholder="Til tidspunkt" />
       </section>
 
       <section className="filter-group">
