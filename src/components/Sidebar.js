@@ -7,6 +7,15 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <section className="filter-group">
+        <h3>Planops</h3>
+        <div className="planops-buttons">
+          <button className="planops-btn">Alle</button>
+          <button className="planops-btn">Aktive</button>
+          <button className="planops-btn">Planlagte</button>
+        </div>
+      </section>
+
+      <section className="filter-group">
         <h3>Type</h3>
         <div className="type-buttons">
           <button

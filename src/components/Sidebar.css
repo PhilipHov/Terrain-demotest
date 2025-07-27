@@ -15,12 +15,14 @@
   text-transform: uppercase;
 }
 
-.type-buttons {
+.type-buttons,
+.planops-buttons {
   display: flex;
   gap: 0.5rem;
 }
 
-.type-btn {
+.type-btn,
+.planops-btn {
   flex: 1;
   padding: 0.5rem;
   background: #3a3f47;
@@ -30,11 +32,13 @@
   transition: background 0.2s;
 }
 
-.type-btn:hover {
+.type-btn:hover,
+.planops-btn:hover {
   background: #50555f;
 }
 
-.type-btn.selected {
+.type-btn.selected,
+.planops-btn.selected {
   background: #fff;
   color: #282c34;
   font-weight: bold;
