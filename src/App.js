@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
+import FacilityModal from './components/FacilityModal';
 import {
   MapContainer,
   TileLayer,
@@ -58,6 +59,38 @@ export default function App() {
   const [selectedCity, setSelectedCity] = useState(null);
   const [cityGeoJson,  setCityGeoJson]  = useState(null);
   const [boroughsFeature, setBoroughsFeature] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedFacility, setSelectedFacility] = useState(null);
+
+  const facilityData = {
+    'Indgang Øst': {
+      name: 'Indgang Øst',
+      ammoType: '5.56',
+      ammoCount: '5000',
+      size: 'fra kl. 23:59 til kl. 00:01',
+      accommodation: '29 pax',
+      meals: '29 pax',
+      totalBudget: '58.500'
+    },
+    'Indgang Vest': {
+      name: 'Indgang Vest',
+      ammoType: '7.62',
+      ammoCount: '3000',
+      size: 'fra kl. 08:00 til kl. 16:00',
+      accommodation: '20 pax',
+      meals: '20 pax',
+      totalBudget: '42.000'
+    },
+    'Bøllemosen': {
+      name: 'Bøllemosen',
+      ammoType: '9mm',
+      ammoCount: '2000',
+      size: 'fra kl. 10:00 til kl. 18:00',
+      accommodation: '15 pax',
+      meals: '15 pax',
+      totalBudget: '28.500'
+    }
+  };
 
   const handleLocationSearch = (locationId) => {
     if (!locationId) return;
@@ -142,7 +175,13 @@ export default function App() {
                 layer.bindTooltip(availabilityInfo, { sticky: true });
                 layer.on({
                   mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
-                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 })
+                  mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 }),
+                  click: () => {
+                    if (facilityData[name]) {
+                      setSelectedFacility(facilityData[name]);
+                      setModalOpen(true);
+                    }
+                  }
                 });
               }
             }}
@@ -176,6 +215,12 @@ export default function App() {
           />
         )}
       </MapContainer>
+
+      <FacilityModal 
+        facility={selectedFacility}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 }
