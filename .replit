@@ -5,7 +5,8 @@ run = "npm run start"
 channel = "stable-25_05"
 
 [deployment]
-run = ["sh", "-c", "npm run start"]
+deploymentTarget = "static"
+publicDir = "dist"
 
 [[ports]]
 localPort = 3000
