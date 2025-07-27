@@ -39,22 +39,18 @@
   color: #333;
 }
 
-.facility-map {
-  height: 200px;
-  background: #f0f0f0;
+.facility-header {
+  background: #f8f8f8;
   border-bottom: 1px solid #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: #666;
+  padding: 20px;
+  text-align: center;
 }
 
-.map-placeholder {
-  background: #e8e8e8;
-  padding: 20px;
-  border-radius: 4px;
+.facility-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
 }
 
 .facility-details {
@@ -101,4 +97,29 @@
 
 .book-button:hover {
   background: #7d5e55;
+}
+
+.editable-field {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.editable-field:focus {
+  outline: none;
+  border-color: #8d6e63;
+  box-shadow: 0 0 3px rgba(141, 110, 99, 0.3);
+}
+
+.budget-display {
+  padding: 8px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
 }
