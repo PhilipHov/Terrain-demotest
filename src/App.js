@@ -234,10 +234,9 @@ export default function App() {
                   mouseover: e => e.target.setStyle({ weight: 3, fillOpacity: 0.4 }),
                   mouseout:  e => e.target.setStyle({ weight: 2, fillOpacity: 0.1 }),
                   click: () => {
-                    if (facilityData[name]) {
-                      setSelectedFacility(facilityData[name]);
-                      setModalOpen(true);
-                    }
+                    const area = facilityData[name];
+                    setSelectedFacility(area);
+                    setModalOpen(true);
                   }
                 });
               }
