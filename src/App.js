@@ -30,6 +30,18 @@ function FlyToMarker({ position, zoom }) {
   return null;
 }
 
+// ——— Map Controller for reset ———
+function MapController({ shouldReset, onResetComplete }) {
+  const map = useMap();
+  useEffect(() => {
+    if (shouldReset) {
+      map.flyTo([56.0, 10.0], 7, { duration: 1.5 });
+      onResetComplete();
+    }
+  }, [map, shouldReset, onResetComplete]);
+  return null;
+}
+
 export default function App() {
   const base = process.env.PUBLIC_URL || '';
 
@@ -65,6 +77,7 @@ export default function App() {
   const [receiptOpen, setReceiptOpen] = useState(false);
   const [bookingData, setBookingData] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
+  const [shouldResetMap, setShouldResetMap] = useState(false);
 
   const handleClear = () => {
     setSelectedCity(null);
@@ -74,6 +87,11 @@ export default function App() {
     setSelectedFacility(null);
     setReceiptOpen(false);
     setBookingData(null);
+    setShouldResetMap(true);
+  };
+
+  const handleMapResetComplete = () => {
+    setShouldResetMap(false);
   };
 
   const facilityData = {
@@ -218,6 +236,11 @@ export default function App() {
         {selectedCity && (
           <FlyToMarker position={selectedCity.coords} zoom={selectedCity.zoom} />
         )}
+
+        <MapController 
+          shouldReset={shouldResetMap} 
+          onResetComplete={handleMapResetComplete} 
+        />
 
         {cityGeoJson && (
           <GeoJSON

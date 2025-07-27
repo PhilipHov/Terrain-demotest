@@ -5,11 +5,13 @@ import './Sidebar.css';
 const Sidebar = ({ onLocationSearch, onDatesSelected, onClear }) => {
   const [type, setType] = useState(null); // 'skydebane' or 'øvelsesterræn'
   const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedUnitType, setSelectedUnitType] = useState('');
   const [resetCalendar, setResetCalendar] = useState(false);
 
   const handleClear = () => {
     setType(null);
     setSelectedLocation('');
+    setSelectedUnitType('');
     setResetCalendar(true);
     if (onDatesSelected) onDatesSelected([]);
     if (onClear) onClear();
@@ -44,7 +46,11 @@ const Sidebar = ({ onLocationSearch, onDatesSelected, onClear }) => {
 
       <section className="filter-group">
         <label htmlFor="unit-type">Enhedstype</label>
-        <select id="unit-type" defaultValue="">
+        <select 
+          id="unit-type" 
+          value={selectedUnitType}
+          onChange={(e) => setSelectedUnitType(e.target.value)}
+        >
           <option value="" disabled>Vælg enhedstype</option>
           <option value="infanteri">Infanteri</option>
           <option value="panserstyrke">Panserstyrke</option>
