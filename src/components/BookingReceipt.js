@@ -94,6 +94,24 @@ const BookingReceipt = ({ booking, isOpen, onClose, onClear }) => {
               <h4>KOST</h4>
               <p>{booking.meals}</p>
             </div>
+            <div className="receipt-item">
+              <h4>GARAGE</h4>
+              <p>{booking.garage ? 'Ja' : 'Nej'}</p>
+            </div>
+          </div>
+          
+          <div className="receipt-row">
+            <div className="receipt-item">
+              <h4>VEDLIGEHOLDELSE</h4>
+              <p>{booking.maintenance ? 'Ja' : 'Nej'}</p>
+            </div>
+            <div className="receipt-item">
+              <h4>KØRETØJ</h4>
+              <p>{booking.vehicleType ? `${booking.vehicleCount}x ${booking.vehicleType}` : 'Ingen'}</p>
+            </div>
+          </div>
+          
+          <div className="receipt-row">
             <div className="receipt-item total-budget">
               <h4>SAMLET BUDGET</h4>
               <p>{booking.totalBudget} kr</p>
