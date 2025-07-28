@@ -225,28 +225,28 @@ export default function App() {
           <>
             <GeoJSON
               data={boroughsFeature}
-              style={(feature) => {
-                const originalName = feature.properties.originalName;
-                // Stampen (1c), Indgang Vest (1a), and Bøllemosen (1d) are booked (red)
-                if (
-                  originalName === "Stampen" ||
-                  originalName === "Indgang Vest" ||
-                  originalName === "Bøllemosen"
-                ) {
-                  return {
-                    color: "#cc0000",
-                    weight: 2,
-                    fillOpacity: 0.3,
-                    fillColor: "#ff0000",
-                  };
-                }
-              return {
+            style: (feature) => {
+              const originalName = feature.properties.originalName;
+
+              if (
+                originalName === "Stampen" ||
+                originalName === "Indgang Vest" ||
+                originalName === "Bøllemosen"
+              ) {
+                return {
+                  color: "#cc0000",
+                  weight: 2,
+                  fillOpacity: 0.3,
+                  fillColor: "#ff0000"
+                };
+              } else {
+                return {
                   color: "#0066cc",
                   weight: 2,
-                  fillOpacity: 0.1,
+                  fillOpacity: 0.1
                 };
-              }}
-              onEachFeature={(feature, layer) => {
+              }
+            },
                 const originalName = feature.properties.originalName;
                 const displayName = feature.properties.displayName;
                 if (originalName === "Stampen") {
