@@ -225,7 +225,7 @@ export default function App() {
           <>
             <GeoJSON
               data={boroughsFeature}
-            style: (feature) => {
+              style={(feature) => {
               const originalName = feature.properties.originalName;
 
               if (
@@ -245,8 +245,8 @@ export default function App() {
                   weight: 2,
                   fillOpacity: 0.1
                 };
-              }
-            },
+              }}
+              onEachFeature={(feature, layer) => {
                 const originalName = feature.properties.originalName;
                 const displayName = feature.properties.displayName;
                 if (originalName === "Stampen") {
