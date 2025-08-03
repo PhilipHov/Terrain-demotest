@@ -25,7 +25,7 @@
       },
       "geometry_name": "wkb_geometry",
       "properties": {
-        "name": "Indgang Vest"
+        "name": "Stampen"
       }
     },
     {
@@ -62,7 +62,7 @@
       },
       "geometry_name": "wkb_geometry",
       "properties": {
-        "name": "Indgang Øst"
+        "name": "Indgang Vest"
       }
     },
     {
@@ -97,7 +97,7 @@
       },
       "geometry_name": "wkb_geometry",
       "properties": {
-        "name": "Stampen"
+        "name": "Indgang Øst"
       }
     },
     {

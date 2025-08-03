@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import FacilityModal from './components/FacilityModal';
 import BookingReceipt from './components/BookingReceipt';
+import Chatbot from './components/Chatbot';
 import {
   MapContainer,
   TileLayer,
@@ -305,6 +306,8 @@ export default function App() {
         onClose={() => setReceiptOpen(false)}
         onClear={handleClear}
       />
+      
+      <Chatbot />
     </div>
   );
 }

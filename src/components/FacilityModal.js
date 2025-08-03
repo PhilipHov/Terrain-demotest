@@ -16,6 +16,12 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
     accommodation: '',
     meals: '',
     accommodationNotes: '',
+    officerAccommodation: '',
+    officerMeals: '',
+    befalingsmandAccommodation: '',
+    befalingsmandMeals: '',
+    konstabelAccommodation: '',
+    konstabelMeals: '',
     
     // Support tab
     garage: false,
@@ -33,8 +39,8 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
   // Base prices for calculation
   const basePrices = {
     ammoTypePrice: { '5.56': 2, '7.62': 3, '5.56 og 7.62': 2.5, '9mm': 1.5 },
-    accommodationPrice: 150, // per person per day
-    mealsPrice: 100, // per person per day
+    accommodationPrice: { 'officer': 250, 'befalingsmand': 200, 'konstabel': 150 }, // per person per day
+    mealsPrice: { 'officer': 150, 'befalingsmand': 120, 'konstabel': 100 }, // per person per day
     timeSlotPrice: 500, // base price per time slot
     garagePrice: 200, // per day
     maintenancePrice: 300, // per day
@@ -66,10 +72,30 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
     total += (ammo556 * basePrices.ammoTypePrice['5.56']) + (ammo762 * basePrices.ammoTypePrice['7.62']);
     
     // Accommodation costs
+    const officerAccommodation = parseInt(editableData.officerAccommodation) || 0;
+    const officerMeals = parseInt(editableData.officerMeals) || 0;
+    const befalingsmandAccommodation = parseInt(editableData.befalingsmandAccommodation) || 0;
+    const befalingsmandMeals = parseInt(editableData.befalingsmandMeals) || 0;
+    const konstabelAccommodation = parseInt(editableData.konstabelAccommodation) || 0;
+    const konstabelMeals = parseInt(editableData.konstabelMeals) || 0;
+    
+    // Calculate costs for each rank level
+    total += (officerAccommodation * basePrices.accommodationPrice.officer * days);
+    total += (officerMeals * basePrices.mealsPrice.officer * days);
+    total += (befalingsmandAccommodation * basePrices.accommodationPrice.befalingsmand * days);
+    total += (befalingsmandMeals * basePrices.mealsPrice.befalingsmand * days);
+    total += (konstabelAccommodation * basePrices.accommodationPrice.konstabel * days);
+    total += (konstabelMeals * basePrices.mealsPrice.konstabel * days);
+    
+    // Legacy support for old accommodation fields
     const accommodationPax = parseInt(editableData.accommodation) || 0;
     const mealsPax = parseInt(editableData.meals) || 0;
-    total += (accommodationPax * basePrices.accommodationPrice * days);
-    total += (mealsPax * basePrices.mealsPrice * days);
+    if (accommodationPax > 0) {
+      total += (accommodationPax * basePrices.accommodationPrice.konstabel * days);
+    }
+    if (mealsPax > 0) {
+      total += (mealsPax * basePrices.mealsPrice.konstabel * days);
+    }
     
     // Support costs
     if (editableData.garage) total += basePrices.garagePrice * days;
@@ -91,7 +117,7 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
   useEffect(() => {
     const newBudget = calculateTotalBudget();
     setEditableData(prev => ({ ...prev, totalBudget: newBudget }));
-  }, [editableData.ammo556Count, editableData.ammo762Count, editableData.accommodation, editableData.meals, editableData.garage, editableData.maintenance, editableData.vehicleType, editableData.vehicleCount, selectedDates]);
+  }, [editableData.ammo556Count, editableData.ammo762Count, editableData.accommodation, editableData.meals, editableData.officerAccommodation, editableData.officerMeals, editableData.befalingsmandAccommodation, editableData.befalingsmandMeals, editableData.konstabelAccommodation, editableData.konstabelMeals, editableData.garage, editableData.maintenance, editableData.vehicleType, editableData.vehicleCount, selectedDates]);
 
   const handleInputChange = (field, value) => {
     setEditableData(prev => ({ ...prev, [field]: value }));
@@ -191,33 +217,124 @@ const FacilityModal = ({ facility, isOpen, onClose, selectedDates, onBookingComp
   const renderAccommodationTab = () => (
     <div className="tab-content">
       <h3>INDKVARTERING & KOST</h3>
-      <div className="detail-row">
-        <div className="detail-item">
-          <h4>INDKVARTERING (PAX)</h4>
-          <input 
-            type="number"
-            value={editableData.accommodation}
-            onChange={(e) => handleInputChange('accommodation', e.target.value)}
-            placeholder="Antal personer"
-          />
+      
+      <div className="compact-accommodation">
+        {/* Officer Section */}
+        <div className="rank-row">
+          <div className="rank-label">OFFICERER</div>
+          <div className="rank-inputs">
+            <div className="input-group">
+              <label>Indkvartering</label>
+              <input 
+                type="number"
+                value={editableData.officerAccommodation}
+                onChange={(e) => handleInputChange('officerAccommodation', e.target.value)}
+                placeholder="0"
+              />
+              <span className="price">250 kr/dag</span>
+            </div>
+            <div className="input-group">
+              <label>Kost</label>
+              <input 
+                type="number"
+                value={editableData.officerMeals}
+                onChange={(e) => handleInputChange('officerMeals', e.target.value)}
+                placeholder="0"
+              />
+              <span className="price">150 kr/dag</span>
+            </div>
+          </div>
         </div>
-        <div className="detail-item">
-          <h4>KOST (PAX)</h4>
-          <input 
-            type="number"
-            value={editableData.meals}
-            onChange={(e) => handleInputChange('meals', e.target.value)}
-            placeholder="Antal personer"
-          />
+
+        {/* Befalingsmand Section */}
+        <div className="rank-row">
+          <div className="rank-label">BEFALINGSMÆND</div>
+          <div className="rank-inputs">
+            <div className="input-group">
+              <label>Indkvartering</label>
+              <input 
+                type="number"
+                value={editableData.befalingsmandAccommodation}
+                onChange={(e) => handleInputChange('befalingsmandAccommodation', e.target.value)}
+                placeholder="0"
+              />
+              <span className="price">200 kr/dag</span>
+            </div>
+            <div className="input-group">
+              <label>Kost</label>
+              <input 
+                type="number"
+                value={editableData.befalingsmandMeals}
+                onChange={(e) => handleInputChange('befalingsmandMeals', e.target.value)}
+                placeholder="0"
+              />
+              <span className="price">120 kr/dag</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Konstabel Section */}
+        <div className="rank-row">
+          <div className="rank-label">KONSTABLER</div>
+          <div className="rank-inputs">
+            <div className="input-group">
+              <label>Indkvartering</label>
+              <input 
+                type="number"
+                value={editableData.konstabelAccommodation}
+                onChange={(e) => handleInputChange('konstabelAccommodation', e.target.value)}
+                placeholder="0"
+              />
+              <span className="price">150 kr/dag</span>
+            </div>
+            <div className="input-group">
+              <label>Kost</label>
+              <input 
+                type="number"
+                value={editableData.konstabelMeals}
+                onChange={(e) => handleInputChange('konstabelMeals', e.target.value)}
+                placeholder="0"
+              />
+              <span className="price">100 kr/dag</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Legacy Section */}
+        <div className="rank-row legacy">
+          <div className="rank-label">ALMINDELIG</div>
+          <div className="rank-inputs">
+            <div className="input-group">
+              <label>Indkvartering</label>
+              <input 
+                type="number"
+                value={editableData.accommodation}
+                onChange={(e) => handleInputChange('accommodation', e.target.value)}
+                placeholder="0"
+              />
+              <span className="price">150 kr/dag</span>
+            </div>
+            <div className="input-group">
+              <label>Kost</label>
+              <input 
+                type="number"
+                value={editableData.meals}
+                onChange={(e) => handleInputChange('meals', e.target.value)}
+                placeholder="0"
+              />
+              <span className="price">100 kr/dag</span>
+            </div>
+          </div>
         </div>
       </div>
+
       <div className="detail-item full-width">
         <h4>SÆRLIGE ØNSKER TIL INDKVARTERING</h4>
         <textarea
           value={editableData.accommodationNotes}
           onChange={(e) => handleInputChange('accommodationNotes', e.target.value)}
           placeholder="Beskriv eventuelle særlige ønsker..."
-          rows="3"
+          rows="2"
         />
       </div>
     </div>
