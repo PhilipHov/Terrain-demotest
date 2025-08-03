@@ -25,7 +25,7 @@
       },
       "geometry_name": "wkb_geometry",
       "properties": {
-        "name": "1a"
+        "name": "Stampen"
       }
     },
     {
@@ -62,7 +62,7 @@
       },
       "geometry_name": "wkb_geometry",
       "properties": {
-        "name": "1b"
+        "name": "Indgang Vest"
       }
     },
     {
@@ -97,7 +97,7 @@
       },
       "geometry_name": "wkb_geometry",
       "properties": {
-        "name": "1c"
+        "name": "Indgang Øst"
       }
     },
     {
@@ -123,7 +123,7 @@
       },
       "geometry_name": "wkb_geometry",
       "properties": {
-        "name": "1d"
+        "name": "Bøllemosen"
       }
     }
   ]
